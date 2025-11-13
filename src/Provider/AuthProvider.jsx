@@ -10,7 +10,6 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.init";
 
-// 🔹 Context তৈরি
 export const AuthContext = createContext(null);
 
 export default function AuthProvider({ children }) {
@@ -18,32 +17,26 @@ export default function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true); // Loading state
   const provider = new GoogleAuthProvider();
 
-  // 🔹 নতুন ইউজার তৈরি (Email + Password)
   const createUser = (email, password) => {
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  // 🔹 বিদ্যমান ইউজার লগইন
   const signIn = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
-  // 🔹 Google Sign-in
   const googleSignIn = () => {
     return signInWithPopup(auth, provider);
   };
 
-  // 🔹 ইউজার প্রোফাইল আপডেট
   const updateUserProfile = (profile) => {
     return updateProfile(auth.currentUser, profile);
   };
 
-  // 🔹 Logout
-  const logOut = () => {
+  const handelLogout = () => {
     return signOut(auth);
   };
 
-  // 🔹 Auth State change handle করা
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -52,14 +45,13 @@ export default function AuthProvider({ children }) {
     return () => unsubscribe();
   }, []);
 
-  // 🔹 Context value
   const authInfo = {
     user,
     loading,
     createUser,
     signIn,
     googleSignIn,
-    logOut,
+    handelLogout,
     updateUserProfile,
   };
 
