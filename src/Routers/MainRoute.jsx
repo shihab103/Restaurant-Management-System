@@ -4,7 +4,7 @@ import Login from "../Component/Login/Login";
 import Register from "../Component/Register/Register";
 import Home from "../Pages/Home/Home";
 import AboutUs from "../Pages/AboutUs/AboutUs";
-
+import AddDishes from "../Dashboard/Admin/AddDishes"
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -14,6 +14,7 @@ export const router = createBrowserRouter([
       { path: "/login", Component: Login },
       { path: "/register", Component: Register },
       { path: "/aboutus", Component: AboutUs },
+      { path: "/add-dishes", Component: AddDishes },
     ],
   },
 ]);
