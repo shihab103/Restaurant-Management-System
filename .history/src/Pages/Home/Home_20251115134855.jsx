@@ -4,14 +4,13 @@ import PopularFood from "../../Component/PopularFood/PopularFood";
 import Slider from "../../Component/Slider/Slider";
 import Testimonial from "../../Component/Testimonial/Testimonial";
 
-
 const Home = () => {
   return (
     <div>
       <Slider></Slider>
       <PopularFood/>
-      <AboutUs></AboutUs>
       <OurChef/>
+      <AboutUs></AboutUs>
       <Testimonial></Testimonial>
     </div>
   );
