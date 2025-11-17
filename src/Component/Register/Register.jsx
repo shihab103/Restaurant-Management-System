@@ -1,134 +1,167 @@
-import React, { useContext, useState } from "react";
-import { AuthContext } from "../../Provider/AuthProvider";
-import { useNavigate } from "react-router";
+import React, { useContext, useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { AuthContext } from '../../Provider/AuthProvider';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { useNavigate } from 'react-router';
+import { updateProfile } from 'firebase/auth';
+import Lottie from 'lottie-react';
+import registerAnimation from '../../json/Register.json';
 
 export default function Register() {
-  const { createUser, updateUserProfile, googleSignIn } =
-    useContext(AuthContext);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const { createUser, SetUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  // 🔹 Handle Register Form
+  const [preview, setPreview] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+
+  // 🔥 Handle Register
   const handleRegister = async (e) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
+    const form = e.target;
 
-    const name = e.target.name.value;
-    const email = e.target.email.value;
-    const password = e.target.password.value;
+    const name = form.name.value;
+    const email = form.email.value;
+    const password = form.password.value;
+    const image = form.image.files[0];
 
-    // Password validation
-    if (password.length < 6) {
-      setError("Password must be at least 6 characters long");
-      setLoading(false);
+    // Password Validation
+    const passwordRegex =
+      /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/;
+
+    if (!passwordRegex.test(password)) {
+      setError(
+        "Password must be 6+ chars, include 1 uppercase, 1 number & 1 special character."
+      );
       return;
     }
 
+    setError("");
+
     try {
-      const userCredential = await createUser(email, password);
-      await updateUserProfile({ displayName: name });
-      console.log("Registered User:", userCredential.user);
-      navigate("/");
+      // 1. Create User
+      const result = await createUser(email, password);
+
+      // 2. Upload image to imgbb
+      const formData = new FormData();
+      formData.append("image", image);
+
+      const imgRes = await axios.post(
+        `https://api.imgbb.com/1/upload?key=8be0cdd4b85b2bb02d8b738407647b48`,
+        formData
+      );
+
+      const imageUrl = imgRes.data.data.url;
+
+      // 3. Update Firebase Profile
+      await updateProfile(result.user, {
+        displayName: name,
+        photoURL: imageUrl
+      });
+
+      // 4. Save to database
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/users`,
+        {
+          name,
+          email,
+          image: imageUrl,
+          role: "user"
+        }
+      );
+
+      // 5. Set User Context
+      SetUser({
+        email,
+        displayName: name,
+        photoURL: imageUrl
+      });
+
+      toast.success("Registration Successful!");
+      form.reset();
+      setPreview(null);
+
+      setTimeout(() => navigate("/"), 1000);
     } catch (err) {
       console.error(err);
-      setError("Failed to register. Try again!");
-    } finally {
-      setLoading(false);
+      toast.error("Registration failed. Try again!");
     }
   };
 
-  // 🔹 Google Signup
-  const handleGoogleSignUp = async () => {
-    try {
-      await googleSignIn();
-      navigate("/");
-    } catch (err) {
-      setError("Google sign-up failed!");
-    }
+  // Preview Image
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) setPreview(URL.createObjectURL(file));
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
-        <h2 className="text-2xl font-semibold text-center mb-6 text-gray-800">
-          Create a New Account
-        </h2>
-
-        {error && (
-          <p className="text-red-500 text-center mb-3 text-sm">{error}</p>
-        )}
-
-        <form onSubmit={handleRegister} className="space-y-4">
-          {/* Name */}
-          <div>
-            <label className="block text-gray-700 mb-1">Full Name</label>
-            <input
-              type="text"
-              name="name"
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
-            />
-          </div>
-
-          {/* Email */}
-          <div>
-            <label className="block text-gray-700 mb-1">Email</label>
-            <input
-              type="email"
-              name="email"
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
-            />
-          </div>
-
-          {/* Password */}
-          <div>
-            <label className="block text-gray-700 mb-1">Password</label>
-            <input
-              type="password"
-              name="password"
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-indigo-500 hover:bg-indigo-600 text-white py-2 rounded-lg font-medium transition duration-200"
-          >
-            {loading ? "Creating account..." : "Register"}
-          </button>
-        </form>
-
-        {/* Divider */}
-        <div className="flex items-center my-5">
-          <div className="grow border-t border-gray-300"></div>
-          <span className="mx-3 text-gray-500 text-sm">OR</span>
-          <div className="grow border-t border-gray-300"></div>
+    <div className="container mx-auto lg:w-8/12 my-10 px-4 sm:px-6 md:px-8">
+      <div className="flex flex-col lg:flex-row xl:flex-row items-center gap-6 bg-[#ebeffa] rounded-lg overflow-hidden">
+        
+        {/* Left Side Animation */}
+        <div className="w-full lg:w-1/2 xl:w-1/2 flex justify-center items-center p-4">
+          <Lottie animationData={registerAnimation} loop={true} style={{ width: 500, height: 400 }} />
         </div>
 
-        {/* Google Register */}
-        <button
-          onClick={handleGoogleSignUp}
-          className="flex items-center justify-center gap-2 border border-gray-300 py-2 w-full rounded-lg hover:bg-gray-100 transition"
-        >
-          <img
-            src="https://www.svgrepo.com/show/475656/google-color.svg"
-            alt="Google"
-            className="w-5 h-5"
-          />
-          <span>Continue with Google</span>
-        </button>
+        {/* Right Side Form */}
+        <div className="w-full lg:w-1/2 xl:w-1/2 p-6 md:p-10 bg-white flex flex-col justify-center">
+          <h1 className="text-2xl text-[#db2525] font-bold text-center mb-3">CREATE AN ACCOUNT</h1>
+          <h3 className="text-3xl font-bold text-center mb-6">REGISTER NOW!</h3>
 
-        <p className="text-center text-sm mt-5 text-gray-600">
-          Already have an account?{" "}
-          <a href="/login" className="text-indigo-500 hover:underline font-medium">
-            Login
-          </a>
-        </p>
+          <form onSubmit={handleRegister} className="flex flex-col gap-4">
+
+            {/* Name */}
+            <div>
+              <label className="label-text font-medium mb-1">Full Name</label>
+              <input type="text" name="name" required className="input input-bordered w-full bg-gray-100" />
+            </div>
+
+            {/* Email */}
+            <div>
+              <label className="label-text font-medium mb-1">Email</label>
+              <input type="email" name="email" required className="input input-bordered w-full bg-gray-100" />
+            </div>
+
+            {/* Image Upload */}
+            <div>
+              <label className="label-text font-medium mb-1">Profile Image</label>
+              <input type="file" name="image" accept="image/*" required className="w-full" onChange={handleImageChange} />
+
+              {preview && (
+                <img src={preview} className="mt-3 w-20 h-20 rounded-full border object-cover" alt="Preview" />
+              )}
+            </div>
+
+            {/* Password */}
+            <div className="relative">
+              <label className="label-text font-medium mb-1">Password</label>
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                required
+                className="input input-bordered w-full bg-gray-100 pr-10"
+              />
+              <span
+                className="absolute top-10 right-3 text-gray-600 cursor-pointer"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
+
+            {error && <p className="text-red-600 text-sm -mt-2">{error}</p>}
+
+            {/* Register Button */}
+            <button className="btn btn-primary w-full mt-3">Register</button>
+          </form>
+
+          {/* Login Link */}
+          <p className="mt-4 text-center text-sm">
+            Already have an account?{" "}
+            <a href="/login" className="text-red-500 border-b-2">Login</a>
+          </p>
+        </div>
       </div>
     </div>
   );

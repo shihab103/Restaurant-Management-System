@@ -2,6 +2,8 @@ import React, { useContext, useState } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import { useNavigate } from "react-router";
 import { FcGoogle } from "react-icons/fc";
+import Lottie from "lottie-react";
+import loginAnimation from "../../json/Login.json";
 
 export default function Login() {
   const { signIn, googleSignIn } = useContext(AuthContext);
@@ -10,7 +12,7 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // 🔹 Handle Email + Password Login
+  // Email + Password Login
   const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
@@ -21,7 +23,7 @@ export default function Login() {
 
     try {
       await signIn(email, password);
-      navigate("/"); // Successful login -> redirect home
+      navigate("/");
     } catch (err) {
       console.error(err);
       setError("Invalid email or password");
@@ -30,10 +32,11 @@ export default function Login() {
     }
   };
 
-  // 🔹 Handle Google Login
+  // Google Login
   const handleGoogleLogin = async () => {
     setError("");
     setLoading(true);
+
     try {
       await googleSignIn();
       navigate("/");
@@ -46,74 +49,97 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
-        <h2 className="text-2xl font-semibold text-center mb-6 text-gray-800">
-          Login to Your Account
-        </h2>
+    <div className="container mx-auto lg:w-8/12 my-10 px-4 sm:px-6 md:px-8">
+      <div className="flex flex-col lg:flex-row items-center gap-6 bg-[#ebeffa] rounded-lg overflow-hidden">
 
-        {/* Error Message */}
-        {error && <p className="text-red-500 text-center mb-3 text-sm">{error}</p>}
+        {/* Left Form Section */}
+        <div className="w-full lg:w-1/2 p-8 bg-slate-200 flex flex-col justify-center">
+          <h1 className="text-2xl text-[#db2525] font-bold text-center mb-3">
+            WELCOME BACK TO FRESHEAT
+          </h1>
+          <h3 className="text-3xl font-bold text-center mb-6">LOGIN NOW!</h3>
 
-        <form onSubmit={handleLogin} className="space-y-4">
-          {/* Email */}
-          <div>
-            <label className="block text-gray-700 mb-1">Email</label>
-            <input
-              type="email"
-              name="email"
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
-            />
+          {/* Error Message */}
+          {error && (
+            <p className="text-red-500 text-center mb-3 font-medium">{error}</p>
+          )}
+
+          <form onSubmit={handleLogin} className="flex flex-col gap-4">
+            
+            {/* Email */}
+            <div>
+              <label className="label">
+                <span className="label-text font-medium mb-1">Email: </span>
+              </label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                required
+                className="input input-bordered w-full lg:w-9/12 bg-white border-gray-300"
+              />
+            </div>
+
+            {/* Password */}
+            <div>
+              <label className="label">
+                <span className="label-text font-medium mb-1">Password: </span>
+              </label>
+              <input
+                type="password"
+                name="password"
+                placeholder="Enter Password"
+                required
+                className="input input-bordered w-full lg:w-9/12 bg-white border-gray-300"
+              />
+
+              <label className="label mt-1">
+                <a href="/forgetpassword" className="label-text-alt link link-hover">
+                  Forgot password?
+                </a>
+              </label>
+            </div>
+
+            {/* Login Button */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn btn-primary w-full mt-2"
+            >
+              {loading ? "Logging in..." : "Login"}
+            </button>
+
+            {/* Register Link */}
+            <p className="mt-3 text-sm">
+              Don't have an account?{" "}
+              <a href="/register" className="text-red-500 border-b-2">
+                Register
+              </a>
+            </p>
+          </form>
+
+          {/* Google Login */}
+          <div className="mt-6 w-full flex">
+            <button
+              onClick={handleGoogleLogin}
+              disabled={loading}
+              className="btn btn-outline btn-secondary flex items-center justify-center gap-2 w-full"
+            >
+              <FcGoogle size={20} />
+              <span>Login with Google</span>
+            </button>
           </div>
-
-          {/* Password */}
-          <div>
-            <label className="block text-gray-700 mb-1">Password</label>
-            <input
-              type="password"
-              name="password"
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-indigo-500 hover:bg-indigo-600 text-white py-2 rounded-lg font-medium transition duration-200"
-          >
-            {loading ? "Logging in..." : "Login"}
-          </button>
-        </form>
-
-        {/* Divider */}
-        <div className="flex items-center my-5">
-          <div className="grow border-t border-gray-300"></div>
-          <span className="mx-3 text-gray-500 text-sm">OR</span>
-          <div className="grow border-t border-gray-300"></div>
         </div>
 
-        {/* Google Login */}
-        <button
-          onClick={handleGoogleLogin}
-          disabled={loading}
-          className="flex items-center justify-center gap-2 border border-gray-300 py-2 w-full rounded-lg hover:bg-gray-100 transition"
-        >
-          <FcGoogle size={22} />
-          <span>Continue with Google</span>
-        </button>
+        {/* Right Animation */}
+        <div className="w-full lg:w-1/2 flex justify-center items-center p-4">
+          <Lottie
+            animationData={loginAnimation}
+            loop={true}
+            style={{ width: 500, height: 400 }}
+          />
+        </div>
 
-        {/* Register Link */}
-        <p className="text-center text-sm mt-5 text-gray-600">
-          Don’t have an account?{" "}
-          <a
-            href="/register"
-            className="text-indigo-500 hover:underline font-medium"
-          >
-            Register
-          </a>
-        </p>
       </div>
     </div>
   );
