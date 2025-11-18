@@ -10,8 +10,8 @@ import {
 } from "react-icons/fa";
 import { MdOutlineAccessTime } from "react-icons/md";
 import { Link, NavLink, useNavigate } from "react-router";
-import { AuthContext } from "../../Provider/AuthProvider";
 import { toast } from "react-toastify";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const Navbar = () => {
   const { user, handelLogout } = useContext(AuthContext);
