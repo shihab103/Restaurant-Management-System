@@ -81,7 +81,6 @@ export default function Register() {
       toast.success("Registration Successful!");
       form.reset();
       setPreview(null);
-
       setTimeout(() => navigate("/"), 1000);
     } catch (err) {
       console.error(err);
