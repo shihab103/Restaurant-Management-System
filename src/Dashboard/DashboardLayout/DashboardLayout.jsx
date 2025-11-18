@@ -92,7 +92,7 @@ const DashboardLayout = () => {
 
               <li>
                 <NavLink
-                  to={"manageUsers"}
+                  to={"manageUser"}
                   className="hover:text-red-500 cursor-pointer text-[20px] font-semibold"
                 >
                   <div className="flex gap-3 items-center">

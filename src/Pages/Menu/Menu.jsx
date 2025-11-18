@@ -34,7 +34,7 @@ const Menu = () => {
 useEffect(() => {
   const fetchDishes = async () => {
     try {
-      const response = await axios.get("https://restaurant-management-server-psi-five.vercel.app/allsdishes");
+      const response = await axios.get(`${import.meta.VITE_API_URL}/allsdishes`);
     //   console.log(response.data);
     setAllDishes(response.data)
     } catch (error) {
@@ -64,7 +64,7 @@ useEffect(() => {
 
     try {
       const res = await axios.post(
-        "https://restaurant-management-server-psi-five.vercel.app/cardItem",
+        `${import.meta.VITE_API_URL}/cardItem`,
         selectItem
       );
       if (res.data.success) {
@@ -102,7 +102,7 @@ useEffect(() => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .post("https://restaurant-management-server-psi-five.vercel.app/wishes", wishlistInf)
+          .post(`${import.meta.VITE_API_URL}/wishes`, wishlistInf)
           .then(() => {
             setWishlist((prev) => [...prev, dish._id]);
             Swal.fire(
