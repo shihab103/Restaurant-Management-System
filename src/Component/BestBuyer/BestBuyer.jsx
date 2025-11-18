@@ -24,7 +24,7 @@ const BestBuyer = () => {
             </figure>
             <div className="card-body">
               <h2 className="card-title">
-                <h1>Abu Nayeem Riyad</h1>
+                Abu Nayeem Riyad
               </h2>
               <p></p>
               <div className="flex gap-2">

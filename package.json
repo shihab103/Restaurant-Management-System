@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@tailwindcss/vite": "^4.1.16",
     "axios": "^1.13.2",
+    "emailjs-com": "^3.2.0",
     "firebase": "^12.6.0",
     "lottie-react": "^2.4.1",
     "react": "^19.1.1",
@@ -23,6 +25,7 @@
     "react-slick": "^0.31.0",
     "react-toastify": "^11.0.5",
     "slick-carousel": "^1.8.1",
+    "sweetalert2": "^11.26.3",
     "swiper": "^12.0.3",
     "tailwindcss": "^4.1.16",
     "toastify": "^2.0.1"

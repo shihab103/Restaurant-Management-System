@@ -1,8 +1,10 @@
 import Display from "../../Component/About/Display";
 import TodaySpecialFood from "../../Component/About/TodaySpecialFood";
+import AboutUs from "../../Component/AboutUs/AboutUs";
+import OurChef from "../../Component/OurChef/OurChef";
 
 
-const AboutUs = () => {
+const AboutUsPage = () => {
     return (
         <div className='bg-[#f4f1ea]'>
             <div  style={{
@@ -18,8 +20,10 @@ const AboutUs = () => {
             </div>
             <Display></Display>
             <TodaySpecialFood></TodaySpecialFood>
+            <OurChef></OurChef>
+            <AboutUs></AboutUs>
         </div>
     );
 };
 
-export default AboutUs;
+export default AboutUsPage;
