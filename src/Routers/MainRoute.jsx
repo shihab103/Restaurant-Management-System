@@ -6,6 +6,8 @@ import Home from "../Pages/Home/Home";
 import AboutUs from "../Pages/AboutUs/AboutUs";
 import AddDishes from "../Dashboard/Admin/AddDishes"
 import DashboardLayout from "../Dashboard/DashboardLayout/DashboardLayout";
+import Menu from "../Pages/Menu/Menu";
+import MyProfile from "../Dashboard/MyProfile/MyProfile";
 export const router = createBrowserRouter([
   {
     path: "/",
