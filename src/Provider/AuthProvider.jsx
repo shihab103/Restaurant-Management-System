@@ -16,6 +16,7 @@ export const AuthContext = createContext(null);
 export default function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [users, setUsers] = useState(null);
+  const [AllDishes, setAllDishes] = useState(null);
   const [loading, setLoading] = useState(true);
   const provider = new GoogleAuthProvider();
 
@@ -38,6 +39,21 @@ export default function AuthProvider({ children }) {
   const handelLogout = () => {
     return signOut(auth);
   };
+
+  useEffect(() => {
+    const fetchDishes = async () => {
+      try {
+        const response = await axios.get("https://restaurant-management-server-psi-five.vercel.app/allsdishes");
+      //   console.log(response.data);
+      setAllDishes(response.data)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
+    fetchDishes();
+  }, []);
+  
 
   useEffect(() => {
   if (user?.email) {   
@@ -67,6 +83,7 @@ export default function AuthProvider({ children }) {
     loading,
     createUser,
     signIn,
+    AllDishes,
     googleSignIn,
     handelLogout,
     updateUserProfile,
