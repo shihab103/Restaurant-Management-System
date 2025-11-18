@@ -3,45 +3,30 @@ import React, { useContext, useEffect, useState } from "react";
 import { FaArrowRight, FaEye, FaHeart } from "react-icons/fa";
 import { MdShoppingBasket } from "react-icons/md";
 import Swal from "sweetalert2";
-// import { AuthContext } from "../Provider/AuthProvider";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
 
 const BestDishes = () => {
- const [dishes, setDishes] = useState([]); // Best sellers
-const [allDishes, setAllDishes] = useState([]);
-const [wishlist, setWishlist] = useState([]);
-const { user } = useContext(AuthContext);
-const navigate = useNavigate();
+  const [dishes, setDishes] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
+  const { user,AllDishes } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-// Modal State
-const [selectedDish, setSelectedDish] = useState(null);
-const [isModalOpen, setIsModalOpen] = useState(false);
+  // Modal State
+  const [selectedDish, setSelectedDish] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-useEffect(() => {
-  const fetchDishes = async () => {
-    try {
-     
-      const response = await axios.get(`${import.meta.env.VITE_API_URL}/allsdishes`);
+  // 🔹 Fetch all best selling dishes
+  
+       useEffect(() => {
+  if (AllDishes && AllDishes.length > 0) {
+    const bestSeller = AllDishes.filter((dish) => dish.isBestSeller);
+    setDishes(bestSeller);
+  }
+}, [AllDishes]);
 
-      // Set all dishes
-      setAllDishes(response.data);
-
-      // Filter best sellers directly from response.data
-      const bestSeller = response.data.filter((dish) => dish.isBestSeller);
-      setDishes(bestSeller);
-
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  fetchDishes();
-}, []);
-
-console.log(dishes)
       
   // console.log(user?.uid);
 
@@ -145,7 +130,7 @@ console.log(dishes)
     };
 
     try {
-      const res = await axios.post("https://resturent-management-server-three.vercel.app/cardItem", selectItem);
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/cardItem`, selectItem);
 
       if (res.data.success) {
         toast.success("Item added to cart successfully! 🛒");

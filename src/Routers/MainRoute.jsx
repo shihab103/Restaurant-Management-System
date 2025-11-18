@@ -10,6 +10,8 @@ import Menu from "../Pages/Menu/Menu";
 import MyProfile from "../Dashboard/MyProfile/MyProfile";
 import ManageDishes from "../Dashboard/ManageDishes/ManageDishes";
 import ManageUser from "../Dashboard/ManageUser/ManageUser";
+import Analitic from "../Dashboard/Analitic/Analitic";
+import WishList from "../Component/WishList/WishList";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -19,6 +21,7 @@ export const router = createBrowserRouter([
       { path: "/login", Component: Login },
       { path: "/register", Component: Register },
       { path: "/aboutus", Component: AboutUs },
+      { path: "/wishlist", Component: WishList },
       {
         path: "/menu",
         Component: Menu
@@ -33,6 +36,7 @@ export const router = createBrowserRouter([
       { path: "myProfile", Component: MyProfile },
       { path: "manageDishes", Component: ManageDishes },
       { path: "manageUser", Component: ManageUser },
+      { path: "analytic", Component: Analitic },
     ],
   },
 

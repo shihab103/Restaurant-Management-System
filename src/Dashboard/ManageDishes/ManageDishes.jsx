@@ -17,7 +17,7 @@ const ManageDishes = () => {
     const fetchDishes = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.VITE_API_URL}/allsdishes`
+          `${import.meta.env.VITE_API_URL}/allsdishes`
         );
         setAllDishes(response.data);
       } catch (error) {
@@ -41,7 +41,7 @@ const ManageDishes = () => {
     if (result.isConfirmed) {
       try {
         await axios.delete(
-          `${import.meta.VITE_API_URL}/allsdishes/${dish._id}`
+          `${import.meta.env.VITE_API_URL}/allsdishes/${dish._id}`
         );
 
         setAllDishes(allDishes.filter(d => d._id !== dish._id));
@@ -83,7 +83,7 @@ const ManageDishes = () => {
   const handleUpdateSubmit = async (updatedDish) => {
     try {
       await axios.put(
-        `${import.meta.VITE_API_URL}dishes/${updatedDish._id}`,
+        `${import.meta.env.VITE_API_URL}dishes/${updatedDish._id}`,
         updatedDish
       );
 

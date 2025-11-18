@@ -9,7 +9,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 const DashboardLayout = () => {
   const { users } = useContext(AuthContext);
   const role = users?.role;
-  console.log(role);
+  console.log(users);
 
   return (
     <div className="drawer lg:drawer-open">
