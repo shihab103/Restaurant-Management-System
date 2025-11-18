@@ -112,7 +112,7 @@ const Testimonial = () => {
                   "_blank"
                 )
               }
-              className="w-[120px] sm:w-[160px] lg:w-[200px] h-[120px] sm:h-[160px] lg:h-[200px] animate-spin-slow flex items-center justify-center text-white text-2xl relative group"
+              className="w-[120px] sm:w-40 lg:w-[200px] h-[120px] sm:h-40 lg:h-[200px] animate-spin-slow flex items-center justify-center text-white text-2xl relative group"
             >
               <img src="/images/player.png" alt="play" />
             </button>

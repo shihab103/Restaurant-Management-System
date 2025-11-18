@@ -6,7 +6,6 @@ import Home from "../Pages/Home/Home";
 import AboutUs from "../Pages/AboutUs/AboutUs";
 import AddDishes from "../Dashboard/Admin/AddDishes"
 import DashboardLayout from "../Dashboard/DashboardLayout/DashboardLayout";
-import MyProfile from "../Dashboard/MyProfile/MyProfile";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -16,6 +15,10 @@ export const router = createBrowserRouter([
       { path: "/login", Component: Login },
       { path: "/register", Component: Register },
       { path: "/aboutus", Component: AboutUs },
+      {
+        path: "/menu",
+        Component: Menu
+      }
     ],
   },
   {
@@ -26,4 +29,5 @@ export const router = createBrowserRouter([
       { path: "myProfile", Component: MyProfile },
     ],
   },
+
 ]);

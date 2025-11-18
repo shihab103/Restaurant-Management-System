@@ -70,7 +70,7 @@ const OurChef = () => {
                     "_blank"
                   )
                 }
-                className={`absolute bottom-[-18px] sm:bottom-[-20px] left-1/2 transform -translate-x-1/2 ${chef.buttonColor} text-white p-2 sm:p-3 rounded-full shadow-md hover:scale-110 transition`}
+                className={`absolute bottom-[-18px] sm:-bottom-5 left-1/2 transform -translate-x-1/2 ${chef.buttonColor} text-white p-2 sm:p-3 rounded-full shadow-md hover:scale-110 transition`}
               >
                 <FaShareAlt size={16} className="sm:w-5 sm:h-5" />
               </button>

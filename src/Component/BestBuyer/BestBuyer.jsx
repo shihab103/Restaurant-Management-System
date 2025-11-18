@@ -3,9 +3,6 @@ import React from 'react';
 const BestBuyer = () => {
   return (
     <div>
-
-
-
       <div className="bg-[#f7f4ed] py-16 md:py-20">
         {/* Title */}
         <div className="text-center mb-12 md:mb-16">
