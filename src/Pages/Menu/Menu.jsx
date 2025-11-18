@@ -34,7 +34,7 @@ const Menu = () => {
 useEffect(() => {
   const fetchDishes = async () => {
     try {
-      const response = await axios.get(`${import.meta.VITE_API_URL}/allsdishes`);
+      const response = await axios.get("https://restaurant-management-server-psi-five.vercel.app/allsdishes");
     //   console.log(response.data);
     setAllDishes(response.data)
     } catch (error) {

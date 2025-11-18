@@ -1,5 +1,6 @@
 import AboutUs from "../../Component/AboutUs/AboutUs";
 import BestBuyer from "../../Component/BestBuyer/BestBuyer";
+import BestDishes from "../../Component/BestDishes/BestDishes";
 import Display from "../../Component/Display/Display";
 import OurChef from "../../Component/OurChef/OurChef";
 import PopularFood from "../../Component/PopularFood/PopularFood";
@@ -14,6 +15,7 @@ const Home = () => {
       <Slider></Slider>
       <PopularFood/>
       <Display></Display>
+      <BestDishes></BestDishes>
       <AboutUs></AboutUs>
       <BestBuyer></BestBuyer>
       <TodaySpecialFood></TodaySpecialFood>
