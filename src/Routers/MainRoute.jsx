@@ -6,6 +6,7 @@ import Home from "../Pages/Home/Home";
 import AboutUs from "../Pages/AboutUs/AboutUs";
 import AddDishes from "../Dashboard/Admin/AddDishes"
 import DashboardLayout from "../Dashboard/DashboardLayout/DashboardLayout";
+import MyProfile from "../Dashboard/MyProfile/MyProfile";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -22,6 +23,7 @@ export const router = createBrowserRouter([
     Component: DashboardLayout,
     children: [
       { path: "addDishes", Component: AddDishes },
+      { path: "myProfile", Component: MyProfile },
     ],
   },
 ]);

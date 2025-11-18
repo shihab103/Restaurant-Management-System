@@ -7,10 +7,9 @@ import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 
 const DashboardLayout = () => {
-  const { user } = useContext(AuthContext);
-  const role = user?.role;
-  console.log(role)
-//   const role = 'admin';
+  const { users } = useContext(AuthContext);
+  const role = users?.role;
+  console.log(role);
 
   return (
     <div className="drawer lg:drawer-open">
@@ -52,7 +51,6 @@ const DashboardLayout = () => {
 
       {/* Sidebar */}
       <div className="drawer-side shadow-2xl">
-
         {/* ❗X Close Button (Mobile/Tablet Only) */}
         <div className="lg:hidden absolute right-4 top-4 z-50">
           <label
@@ -67,7 +65,6 @@ const DashboardLayout = () => {
         <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
 
         <ul className="menu p-4 w-80 min-h-full bg-[#1d1d29] text-white">
-
           {/* Logo */}
           <li>
             <NavLink className="mt-5 font-semibold" to="/">
