@@ -8,6 +8,7 @@ import AddDishes from "../Dashboard/Admin/AddDishes"
 import DashboardLayout from "../Dashboard/DashboardLayout/DashboardLayout";
 import Menu from "../Pages/Menu/Menu";
 import MyProfile from "../Dashboard/MyProfile/MyProfile";
+import ManageDishes from "../Dashboard/ManageDishes/ManageDishes";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -29,6 +30,7 @@ export const router = createBrowserRouter([
     children: [
       { path: "addDishes", Component: AddDishes },
       { path: "myProfile", Component: MyProfile },
+      { path: "manageDishes", Component: ManageDishes },
     ],
   },
 

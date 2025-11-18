@@ -15,6 +15,7 @@ import { AuthContext } from "../../Provider/AuthProvider";
 
 const Navbar = () => {
   const { user, handelLogout } = useContext(AuthContext);
+  console.log(user)
   const [cardItems, setCardItems] = useState([]);
   const [mobileMenu, setMobileMenu] = useState(false);
   const navigate = useNavigate();
@@ -98,12 +99,12 @@ const Navbar = () => {
                   <>
                     <div className="relative group inline-block">
                       <img
-                        src={user?.image || "/default-avatar.png"}
+                        src={user?.image || user?.photoURL || "/default-avatar.png"}
                         className="w-[30px] h-[30px] rounded-full object-cover"
-                        alt={user?.name || "User"}
+                        alt={user?.name || user?.displayName || "User"}
                       />
                       <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 hidden group-hover:block bg-black text-white text-sm px-2 py-1 rounded shadow-md z-10 whitespace-nowrap">
-                        {user?.name || "User"}
+                        {user?.name || user?.displayName || "User"}
                       </div>
                     </div>
                     <li onClick={handelSignOut} className="list-none">
