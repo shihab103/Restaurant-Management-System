@@ -46,7 +46,7 @@ const Navbar = () => {
 
           {/* Right Side */}
           <div
-            className="flex flex-col flex-grow bg-black text-white relative"
+            className="flex flex-col grow bg-black text-white relative"
             style={{
               clipPath: "polygon(2% 0, 100% 0%, 100% 100%, 0% 100%)",
               zIndex: 5,
@@ -87,7 +87,7 @@ const Navbar = () => {
               {/* Right Section */}
               <div className="flex items-center gap-7 mt-4 md:mt-0 text-white mr-[150px]">
                 {/* Cart */}
-                <button onClick={() => navigate("/card")} className="relative">
+                <button onClick={() => navigate("/cart")} className="relative">
                   <FaShoppingCart className="text-xl cursor-pointer" />
                   <span className="absolute -top-2 -right-2 text-xs bg-orange-500 text-white rounded-full w-5 h-5 flex items-center justify-center">
                     {cardItems.length}

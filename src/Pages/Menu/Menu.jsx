@@ -14,7 +14,8 @@ const Menu = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const dishesPerPage = 12;
-  const { user } = useContext(AuthContext);
+  const { user,users } = useContext(AuthContext);
+  console.log(users)
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
  const [allDishes, setAllDishes] = useState('')
@@ -61,6 +62,7 @@ useEffect(() => {
       userId: user._id,
       itemQuantity: 1,
     };
+     console.log(selectItem)
 
     try {
       const res = await axios.post(

@@ -9,6 +9,7 @@ import DashboardLayout from "../Dashboard/DashboardLayout/DashboardLayout";
 import Menu from "../Pages/Menu/Menu";
 import MyProfile from "../Dashboard/MyProfile/MyProfile";
 import ManageDishes from "../Dashboard/ManageDishes/ManageDishes";
+import Cart from "../Pages/Cart/Cart";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
       {
         path: "/menu",
         Component: Menu
+      },
+      {
+        path: "/cart",
+        Component: Cart
       }
     ],
   },
